@@ -51,12 +51,12 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  getPost() {
-    return this.postsService.getPost();
+  getPosts() {
+    return this.postsService.getAllPosts();
   }
 
   @Get(':id')
-  getPosts(@Param('id') id: string) {
+  getPost(@Param('id') id: string) {
     return this.postsService.getPostById(+id);
   }
 
