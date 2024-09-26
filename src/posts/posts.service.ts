@@ -78,8 +78,12 @@ export class PostsService {
     return newPost;
   }
 
-  updatePost(id: number, author: string, title: string, content: string) {
-    const post = posts.find((post) => post.id === id);
+  async updatePost(id: number, author: string, title: string, content: string) {
+    const post = await this.postsRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
     if (!post) {
       throw new NotFoundException();
@@ -97,9 +101,9 @@ export class PostsService {
       post.content = content;
     }
 
-    posts.map((prevPost) => (prevPost.id === post.id ? post : prevPost));
+    const newPost = await this.postsRepository.save(post);
 
-    return post;
+    return newPost;
   }
 
   deletePsotById(id: number) {
